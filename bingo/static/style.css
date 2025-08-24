@@ -1,0 +1,180 @@
+/* static/style.css - Custom CSS for the Bingo game. */
+
+/* Import a custom font for the whole app. */
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:wght @400;600;700&display=swap');
+
+/* Apply global styles and font family. */
+body {
+    background-color: #1a202c; /* A dark background color. */
+    color: #e2e8f0; /* A light text color for contrast. */
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure the body takes up the full viewport height. */
+    margin: 0;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Increased max-width for larger screens */
+    padding: 1rem;
+    position: relative;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.main-title {
+    color: #48bb78; /* Green color */
+    text-align: center;
+    width: 100%;
+}
+
+#main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#auth-view {
+    max-width: 600px; /* Increased max-width for the auth forms */
+    padding: 3rem; /* Increased padding */
+}
+
+#auth-view input {
+    font-size: 1.25rem;
+    padding: 0.75rem;
+}
+
+#auth-view button[type="submit"] {
+    font-size: 1.25rem;
+    padding: 0.75rem;
+}
+
+#game-view {
+    width: 100%;
+}
+
+.game-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.left-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 20%;
+}
+
+.center-panel {
+    flex-basis: 60%;
+}
+
+/* Styles for the Bingo board grid. */
+#bingo-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 600px; /* Set a max-width for the board */
+    margin: 0 auto; /* Center the board */
+    aspect-ratio: 1; /* Keep the grid square. */
+    padding: 1rem;
+    background-color: #2d3748;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Styles for the header cells (B, I, N, G, O). */
+.bingo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2rem; /* Increased font size */
+    color: #cbd5e0;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+/* Styles for the clickable bingo cells. */
+.bingo-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1; /* Keep the cells square. */
+    background-color: #4a5568;
+    border-radius: 0.5rem;
+    font-size: 2rem; /* Increased font size */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    user-select: none;
+}
+
+.bingo-cell:hover:not(.marked) {
+    background-color: #636b77;
+    transform: scale(1.05);
+}
+
+/* Styles for marked cells. */
+.bingo-cell.marked {
+    background-color: #38a169; /* A green color for marked cells. */
+    color: #fff;
+    transform: scale(0.9);
+    pointer-events: none; /* Disable clicking on marked cells. */
+}
+
+/* Specific style for the free space cell. */
+#free-space {
+    background-color: #718096;
+    font-size: 1.5rem; /* Increased font size */
+    font-weight: normal;
+    font-style: italic;
+    color: #e2e8f0;
+}
+
+#leaderboard-link-btn {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    margin-top: 1rem;
+}
+
+/* Leaderboard table styles. */
+#leaderboard-table th, #leaderboard-table td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+#leaderboard-table tbody tr:nth-child(even) {
+    background-color: #2d3748;
+}
+
+#leaderboard-table tbody tr:hover {
+    background-color: #4a5568;
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+    }
+
+    .left-panel, .right-panel, .center-panel {
+        flex-basis: 100%;
+        margin-bottom: 2rem;
+    }
+}

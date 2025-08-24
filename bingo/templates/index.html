@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght @400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1 class="text-3xl font-bold mb-4 main-title">Bingo Master</h1>
+            <div id="auth-status" class="flex items-center space-x-2">
+                <span id="username-display" class="font-semibold text-white"></span>
+                <button id="logout-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hidden">Logout</button>
+            </div>
+        </header>
+        
+        <main id="main-content">
+            <!-- Login/Registration View -->
+            <div id="auth-view" class="flex flex-col items-center justify-center p-8 bg-gray-800 rounded-lg shadow-xl w-full max-w-sm">
+                <div id="login-form-container">
+                    <h2 class="text-2xl font-semibold mb-4 text-center text-white">Login</h2>
+                    <form id="login-form" class="space-y-4">
+                        <input type="text" id="login-username" placeholder="Username" required class="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="password" id="login-password" placeholder="Password" required class="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow-md transition duration-200">Login</button>
+                    </form>
+                    <p class="mt-4 text-center text-sm text-gray-400">
+                        Don't have an account? <a href="#" id="show-register" class="text-blue-400 hover:underline">Register here</a>
+                    </p>
+                </div>
+                
+                <div id="register-form-container" class="hidden">
+                    <h2 class="text-2xl font-semibold mb-4 text-center text-white">Register</h2>
+                    <form id="register-form" class="space-y-4">
+                        <input type="text" id="register-username" placeholder="Username" required class="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <input type="password" id="register-password" placeholder="Password" required class="w-full px-4 py-2 bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg shadow-md transition duration-200">Register</button>
+                    </form>
+                    <p class="mt-4 text-center text-sm text-gray-400">
+                        Already have an account? <a href="#" id="show-login" class="text-blue-400 hover:underline">Login here</a>
+                    </p>
+                </div>
+                <p id="auth-message" class="mt-4 text-center text-sm font-medium"></p>
+            </div>
+            
+            <!-- Game View -->
+            <div id="game-view" class="hidden flex flex-col items-center p-8 bg-gray-800 rounded-lg shadow-xl w-full">
+                <div class="game-container">
+                    <div class="left-panel">
+                        <div class="flex flex-col items-center mb-6">
+                            <h2 class="text-xl font-bold mb-2 text-white">Current Number</h2>
+                            <div id="current-number-display" class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center text-5xl font-extrabold text-white shadow-inner">
+                                <span id="current-number"></span>
+                            </div>
+                        </div>
+                        <button id="call-number-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-200">Call Next Number</button>
+                    </div>
+                    <div class="center-panel">
+                        <div id="bingo-board" class="grid grid-cols-5 gap-2 w-full">
+                            <div class="bingo-header">B</div>
+                            <div class="bingo-header">I</div>
+                            <div class="bingo-header">N</div>
+                            <div class="bingo-header">G</div>
+                            <div class="bingo-header">O</div>
+                        </div>
+                    </div>
+                    <div class="right-panel">
+                        <button id="check-bingo-btn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-200">Check Bingo!</button>
+                        <button id="leaderboard-link-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-200">Leaderboard</button>
+                        <button id="new-game-btn" class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition duration-200 hidden">New Game</button>
+                    </div>
+                </div>
+                <p id="game-message" class="mt-4 font-semibold text-lg text-white"></p>
+            </div>
+            
+            <!-- Leaderboard View -->
+            <div id="leaderboard-view" class="hidden flex flex-col p-8 bg-gray-800 rounded-lg shadow-xl w-full max-w-md">
+                <h2 class="text-2xl font-semibold mb-4 text-center text-white">Top 10 Scores</h2>
+                <table id="leaderboard-table" class="w-full text-left text-white">
+                    <thead>
+                        <tr class="border-b border-gray-600">
+                            <th class="py-2">Rank</th>
+                            <th class="py-2">Username</th>
+                            <th class="py-2">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Leaderboard data will be injected here by JavaScript -->
+                    </tbody>
+                </table>
+                <p id="leaderboard-message" class="mt-4 text-center text-sm font-medium text-gray-400"></p>
+                <div class="flex justify-center mt-4">
+                    <button id="show-game-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full shadow-md transition duration-200">Back to Game</button>
+                </div>
+            </div>
+        </main>
+        
+        
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</body>
+</html>
